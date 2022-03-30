@@ -1,12 +1,15 @@
-import { useMemo } from 'react'
+import { useMemo, useContext } from 'react'
 import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
 import { map } from 'lodash'
 
 import { getHighchartsOptions } from './options'
 import { FIELDS } from '../constants'
+import { ChartsContext } from '../../../App'
 
 export default function Chart({ data }) {
+    const { setIsZoomActive } = useContext(ChartsContext)
+
     return useMemo(() => {
         
         const series = map(FIELDS, (field, key) => {
@@ -26,6 +29,14 @@ export default function Chart({ data }) {
             }
         })
 
+        let xAxis = {
+            events: {
+                afterSetExtremes: event => {
+                    setIsZoomActive(event.userMax || event.userMin)
+                }
+            },
+        }
+
         let yAxis = map(FIELDS, (field, key) => {
 
             return {
@@ -38,7 +49,7 @@ export default function Chart({ data }) {
             }
         })
 
-        const options = getHighchartsOptions({ series, yAxis })
+        const options = getHighchartsOptions({ series, xAxis, yAxis })
 
         return (
             <>

@@ -12,8 +12,8 @@ const defaultHighchartsOptions = {
     },
     legend: {
         itemHiddenStyle: { opacity: 0.6 },
-        itemHoverStyle: { opacity: 1 },
-        itemStyle: { fontSize: '11px', fontWeight: 'normal', color: '#9E9E9E', opacity: 0.9 },
+        itemHoverStyle: { color: '#9E9E9E', opacity: 1 },
+        itemStyle: { fontSize: '11px', fontWeight: 'normal', color: '#9E9E9E', opacity: 0.8 },
         symbolRadius: 3,
         symbolHeight: 10,
         symbolWidth: 10,
@@ -76,11 +76,15 @@ const defaultHighchartsOptions = {
     },
 }
 
-export function getHighchartsOptions({ series, yAxis }) {
+export function getHighchartsOptions({ series, xAxis, yAxis }) {
     return {
         ...defaultHighchartsOptions,
         title: { text: '' },
         series,
+        xAxis: {
+            ...defaultHighchartsOptions.xAxis,
+            ...xAxis
+        },
         yAxis
     }
 }

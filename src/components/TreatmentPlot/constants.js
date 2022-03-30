@@ -13,18 +13,18 @@ export const FIELDS = {
         attributeName: 'wellhead_pressure',
         color: 'red',
         label: 'Pressure',
-        units: 'unit x'
+        units: 'PSI'
     },
     rate: { 
         attributeName: 'slurry_flow_rate_in',
         color: 'blue',
         label: 'Rate',
-        units: 'unit y'
+        units: 'BPM'
     },
     concentration: { 
         attributeName: 'total_proppant_concentration',
         color: 'green',
         label: 'Prop Concentration',
-        units: 'unit z'
+        units: 'PPG'
     },
 }
