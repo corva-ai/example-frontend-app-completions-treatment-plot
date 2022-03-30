@@ -1,13 +1,16 @@
 # Important notes
-This is an app that contains a Treatment Plot component.
+This is an app that contains a generic Treatment Plot component.
 
-The only prop that this Treatment Plot component needs is the asset id.
+The only prop that this Treatment Plot component needs is the asset id. Context has been implemented so you can use this value and others across all children and across different charts if needed.
 
+## Constants to consider
 Inside the directory of the Treatment component, you can find a constants file in which you will need to defined the following important values:
 
 - DATASET: the name of the collection, usually called ``` completion.wits ```
 - PROVIDER: the name of your company in Dev Center
 - FIELDS: three main attributes needed for a Treatment plot are: Pressure, Rate and Prop Concentration. You should define the key names of these attributes, as well as the units, color and the label that you want to display in the plot axis and the hover component.
+
+Additional to this, remember to define your asset id inside the main App component.
 
 
 # Getting Started with Create Corva App
