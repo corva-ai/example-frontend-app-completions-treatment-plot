@@ -6,7 +6,7 @@ The only prop that this Treatment Plot component needs is the asset id. Context 
 ## Constants to consider
 Inside the directory of the Treatment component, you can find a constants file in which you will need to defined the following important values:
 
-- DATASET: the name of the collection, usually called ``` completion.wits ```
+- DATASET_GRANULARITY: the names of the collections, usually called ``` completion.wits ```. Here you can establish the granularity of your data.
 - PROVIDER: the name of your company in Dev Center
 - FIELDS: three main attributes needed for a Treatment plot are: Pressure, Rate and Prop Concentration. You should define the key names of these attributes, as well as the units, color and the label that you want to display in the plot axis and the hover component.
 

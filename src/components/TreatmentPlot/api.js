@@ -1,11 +1,16 @@
 import { corvaDataAPI } from '@corva/ui/clients'
 import { map } from 'lodash'
 
-import { API_PATH, DATASET, FIELDS, QUERY_PARAMS, PROVIDER } from './constants'
+import { API_PATH, DATASET_GRANULARITY, FIELDS, QUERY_PARAMS, PROVIDER } from './constants'
 
-export const fetchData = async assetID => {
+export const fetchData = async (assetID, granularity) => {
     let result = []
-    let fields = map(FIELDS, field => `data.${field.attributeName}`).concat('timestamp')
+    let fields = map(FIELDS, field => {
+        if(granularity === DATASET_GRANULARITY[0])
+            return `data.${field.attributeName}`
+        else
+            return `data.median.${field.attributeName}`
+    }).concat('timestamp')
 
     const params = {
         fields: fields.join(','),
@@ -16,7 +21,7 @@ export const fetchData = async assetID => {
     }
 
     try {
-        result = await corvaDataAPI.get(`${API_PATH}/${PROVIDER}/${DATASET}/`, params)
+        result = await corvaDataAPI.get(`${API_PATH}/${PROVIDER}/${granularity}/`, params)
     }
     catch(error){
         console.log("Error fetching PRC data: ", error)

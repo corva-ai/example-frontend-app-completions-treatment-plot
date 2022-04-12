@@ -1,11 +1,11 @@
 import { socketClient } from '@corva/ui/clients'
-import { DATASET, FIELDS, PROVIDER } from './constants'
+import { DATASET_GRANULARITY, FIELDS, PROVIDER } from './constants'
 
 export function createSubscription({ asset_id: assetId, updateData }) {
   
   const subscription = { 
     assetId: assetId,
-    dataset: DATASET,
+    dataset: DATASET_GRANULARITY[2],
     provider: PROVIDER,
   }
 

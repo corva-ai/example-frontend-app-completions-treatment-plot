@@ -2,6 +2,11 @@ const defaultHighchartsOptions = {
     chart: {
         backgroundColor: 'transparent',
         plotBackgroundColor: '#191919',
+        resetZoomButton: {
+            position: {
+                y: -300
+            }
+        },
         style: { color: '#9E9E9E', fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif', fontSize: '11px', fontWeight: 'normal' },
         zoomType: 'x'
     },
@@ -76,9 +81,13 @@ const defaultHighchartsOptions = {
     },
 }
 
-export function getHighchartsOptions({ series, xAxis, yAxis }) {
+export function getHighchartsOptions({ chart, series, xAxis, yAxis }) {
     return {
         ...defaultHighchartsOptions,
+        chart: {
+            ...defaultHighchartsOptions.chart,
+            ...chart
+        },
         title: { text: '' },
         series,
         xAxis: {

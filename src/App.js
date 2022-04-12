@@ -11,7 +11,7 @@ export const ChartsContext = createContext()
 function App(props) {
   const { appHeaderProps } = props
   const [isZoomActive, setIsZoomActive] = useState(false)
-  const asset_id = 'YOUR_ASSET_ID'
+  const asset_id = 20173768
 
   return (
     <div className={styles.container}>
