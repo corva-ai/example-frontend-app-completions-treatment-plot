@@ -81,13 +81,9 @@ const defaultHighchartsOptions = {
     },
 }
 
-export function getHighchartsOptions({ chart, series, xAxis, yAxis }) {
+export function getHighchartsOptions({ series, xAxis, yAxis }) {
     return {
         ...defaultHighchartsOptions,
-        chart: {
-            ...defaultHighchartsOptions.chart,
-            ...chart
-        },
         title: { text: '' },
         series,
         xAxis: {

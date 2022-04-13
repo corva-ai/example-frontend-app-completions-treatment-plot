@@ -11,43 +11,16 @@ import { TreatmentPlotContext } from '../index'
 
 export default function Chart() {
     const { setIsZoomActive } = useContext(ChartsContext)
-    const { plotData: data, granularity, setGranularity } = useContext(TreatmentPlotContext)
+    const { plotData: data, datasetGranularity, prcPlotRef, setDatasetGranularity } = useContext(TreatmentPlotContext)
 
     return useMemo(() => {
-        const chart = {
-            events: {
-                // load: event => {
-                //     const { dataMax, dataMin } = event.target.xAxis[0]
-                //     const timeLength = (dataMax - dataMin)/1000
-                    
-                //     if(timeLength <= 10000)
-                //         DATASET_GRANULARITY[0]
-                //     else if(timeLength <= 100000)
-                //         DATASET_GRANULARITY[1]
-                //     else if(timeLength <= 600000)
-                //         DATASET_GRANULARITY[2]
-                // }
-                load() {
-                    const chart = this
-                    const x = chart.plotLeft + 10
-                    const y = chart.plotTop + 10
-                    chart.renderer.button('Reset Zoom', x, y)
-                        .on('click', () => {
-                            chart.xAxis[0].setExtremes()
-                        })
-                        .add()
-                        .toFront()
-                }
-
-            }
-        }
         
         const series = map(FIELDS, (field, key) => {
             return {
                 color: field.color,
                 data: map(data, record => {
                     // If dataset is summary.wits, we take the median value
-                    if(granularity === DATASET_GRANULARITY[0])
+                    if(datasetGranularity === DATASET_GRANULARITY[0])
                         return [record.timestamp * 1000, record.data[field.attributeName]]
                     else
                         return [record.timestamp * 1000, record.data.median[field.attributeName]]
@@ -66,11 +39,19 @@ export default function Chart() {
         let xAxis = {
             events: {
                 afterSetExtremes: event => {
-                    console.log('event', event)
                     const { userMax, userMin } = event
+                    const timeLength = (userMax - userMin)/1000
                     console.log('userMax', userMax)
                     console.log('userMin', userMin)
-                    console.log('TOTAL: ', (userMax - userMin)/1000)
+                    console.log('TOTAL: ', timeLength)
+
+                    if(timeLength <= 10000)
+                        setDatasetGranularity(DATASET_GRANULARITY[0])
+                    else if(timeLength <= 100000)
+                        setDatasetGranularity(DATASET_GRANULARITY[1])
+                    else if(timeLength <= 600000)
+                        setDatasetGranularity(DATASET_GRANULARITY[2])
+
                     setIsZoomActive(userMax || userMin)
                 }
             },
@@ -88,7 +69,7 @@ export default function Chart() {
             }
         })
 
-        const options = getHighchartsOptions({ chart, series, xAxis, yAxis })
+        const options = getHighchartsOptions({ series, xAxis, yAxis })
 
         return (
             <>
@@ -97,6 +78,7 @@ export default function Chart() {
                     highcharts={Highcharts}
                     immutable
                     options={options}
+                    ref={prcPlotRef}
                 />
             </>
         )

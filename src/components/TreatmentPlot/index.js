@@ -1,9 +1,10 @@
-import { useEffect, useState, useContext, createContext } from 'react'
+import { useEffect, useState, useContext, createContext, useRef } from 'react'
 
 import { fetchData } from './api'
 import { createSubscription } from './subscription'
 
 import Chart from './Chart'
+import Button from '@material-ui/core/Button'
 import { ChartsContext } from '../../App'
 import { DATASET_GRANULARITY } from './constants'
 
@@ -22,6 +23,9 @@ export default function TreatmentPlotComponent() {
     const [bufferData, setBufferData] = useState({ prc: [] })
     const [datasetGranularity, setDatasetGranularity] = useState(INITIAL_GRANULARITY)
     const [plotData, setPlotData] = useState(INITIAL_PLOT_DATA_STATE) 
+    const prcPlotRef = useRef(null)
+
+    console.log('datasetGranularity', datasetGranularity)
 
     // Fetch initial data
     useEffect(() => {
@@ -71,6 +75,17 @@ export default function TreatmentPlotComponent() {
             setBufferData(prevBuffer => { return { ...prevBuffer, prc: [] }})
         }
     }, [isZoomActive])
+
+    const onResetZoomClick = () => {
+        const chart = prcPlotRef.current.chart
+
+        if(chart)
+            chart.xAxis[0].setExtremes()
+
+        if(datasetGranularity !== INITIAL_GRANULARITY)
+            setDatasetGranularity(INITIAL_GRANULARITY)
+    }
+    
     
     // We use this function to update only the initial granularity dataset realtime data
     const updateData = newData => {
@@ -90,16 +105,29 @@ export default function TreatmentPlotComponent() {
     }
 
     return (
-        <section>
-            <TreatmentPlotContext.Provider 
-                value={{ 
-                    datasetGranularity, 
-                    plotData: plotData[datasetGranularity],
-                    setDatasetGranularity
-                }}
-            >
-                <Chart/>
-            </TreatmentPlotContext.Provider>
-        </section>
+        <>
+            {
+                isZoomActive &&
+                <Button 
+                    color="primary"
+                    onClick={() => onResetZoomClick()}
+                    variant="contained" 
+                >
+                    Reset Zoom
+                </Button>
+            }
+            <section>
+                <TreatmentPlotContext.Provider 
+                    value={{ 
+                        datasetGranularity, 
+                        plotData: plotData[datasetGranularity],
+                        prcPlotRef,
+                        setDatasetGranularity
+                    }}
+                >
+                    <Chart/>
+                </TreatmentPlotContext.Provider>
+            </section>
+        </>
     )
 }
