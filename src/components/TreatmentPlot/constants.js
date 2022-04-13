@@ -11,19 +11,19 @@ export const QUERY_PARAMS = {
 export const FIELDS = {
     pressure: { 
         attributeName: 'wellhead_pressure',
-        color: 'red',
+        color: '#F50258',
         label: 'Pressure',
         units: 'PSI'
     },
     rate: { 
         attributeName: 'slurry_flow_rate_in',
-        color: 'blue',
+        color: '#64B5FF',
         label: 'Rate',
         units: 'BPM'
     },
     concentration: { 
         attributeName: 'total_proppant_concentration',
-        color: 'green',
+        color: '#FF8F0B',
         label: 'Prop Concentration',
         units: 'PPG'
     },
