@@ -24,13 +24,18 @@ export default function TreatmentPlotComponent() {
     const [datasetGranularity, setDatasetGranularity] = useState(INITIAL_GRANULARITY)
     const [plotData, setPlotData] = useState(INITIAL_PLOT_DATA_STATE) 
     const prcPlotRef = useRef(null)
+    const [dateRange, setDateRange] = useState({
+        start: null,
+        end: null
+    })
 
     console.log('datasetGranularity', datasetGranularity)
+    console.log('dateRange', dateRange)
 
     // Fetch initial data
     useEffect(() => {
         const fetchInitialData = async () => {
-            const result = await fetchData(asset_id, datasetGranularity)
+            const result = await fetchData(asset_id, datasetGranularity, dateRange)
             setPlotData(prevData => {
                 return {
                     ...prevData,
@@ -84,6 +89,8 @@ export default function TreatmentPlotComponent() {
 
         if(datasetGranularity !== INITIAL_GRANULARITY)
             setDatasetGranularity(INITIAL_GRANULARITY)
+
+        setDateRange({ start: null, end: null })
     }
     
     
@@ -122,7 +129,8 @@ export default function TreatmentPlotComponent() {
                         datasetGranularity, 
                         plotData: plotData[datasetGranularity],
                         prcPlotRef,
-                        setDatasetGranularity
+                        setDatasetGranularity,
+                        setDateRange
                     }}
                 >
                     <Chart/>

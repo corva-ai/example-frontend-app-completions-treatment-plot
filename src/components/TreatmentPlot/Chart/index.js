@@ -11,7 +11,7 @@ import { TreatmentPlotContext } from '../index'
 
 export default function Chart() {
     const { setIsZoomActive } = useContext(ChartsContext)
-    const { plotData: data, datasetGranularity, prcPlotRef, setDatasetGranularity } = useContext(TreatmentPlotContext)
+    const { plotData: data, datasetGranularity, prcPlotRef, setDatasetGranularity, setDateRange } = useContext(TreatmentPlotContext)
 
     return useMemo(() => {
         
@@ -44,6 +44,11 @@ export default function Chart() {
                     console.log('userMax', userMax)
                     console.log('userMin', userMin)
                     console.log('TOTAL: ', timeLength)
+
+                    setDateRange({
+                        start: userMin,
+                        end: userMax
+                    })
 
                     if(timeLength <= 10000)
                         setDatasetGranularity(DATASET_GRANULARITY[0])
