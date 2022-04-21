@@ -29,9 +29,6 @@ export default function TreatmentPlotComponent() {
         end: null
     })
 
-    console.log('datasetGranularity', datasetGranularity)
-    console.log('dateRange', dateRange)
-
     // Fetch initial data
     useEffect(() => {
         const fetchInitialData = async () => {

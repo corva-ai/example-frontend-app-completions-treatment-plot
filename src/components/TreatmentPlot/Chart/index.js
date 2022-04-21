@@ -41,9 +41,6 @@ export default function Chart() {
                 afterSetExtremes: event => {
                     const { userMax, userMin } = event
                     const timeLength = (userMax - userMin)/1000
-                    console.log('userMax', userMax)
-                    console.log('userMin', userMin)
-                    console.log('TOTAL: ', timeLength)
 
                     setDateRange({
                         start: userMin,

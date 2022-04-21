@@ -28,8 +28,6 @@ export const fetchData = async (assetID, granularity, dateRange) => {
         sort: QUERY_PARAMS.SORT,
     }
 
-    console.log('PARAMS: ', params)
-
     try {
         result = await corvaDataAPI.get(`${API_PATH}/${PROVIDER}/${granularity}/`, params)
     }
